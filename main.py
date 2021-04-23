@@ -22,7 +22,8 @@ padding = -.05
 # Default image pulled in if no argument provided
 defaultPath = 'TestImages/group.jpg'
 
-def draw_ROI(event, clicked_x, clicked_y, flags, param):
+# User has clicked within image, check if it was within a detected face
+def clickDetected(event, clicked_x, clicked_y, flags, param):
     global selected
     global generated
     if event == cv2.EVENT_LBUTTONDOWN:
@@ -62,6 +63,7 @@ def BackgroundReplacement(Generated):
     hg += int(hg * padding) * 2
     return Generated[yg:yg+hg, xg:xg+wg] # Cut out just the detected face
 
+# Generate a face, perform background replacement, resize to selected face, place it in global storage so it can be accessed later
 def ReplaceFace():
     global selected
     global generated
@@ -78,12 +80,14 @@ def ReplaceFace():
     generated = Generated.copy()
     generatedOriginal = Generated.copy() # Save so can return to this original form if modifications are made
 
+# Increase or decrease brightness of generated face
 def ChangeGeneratedBrightness(change):
     for yg in range(generated.shape[0]):
         for xg in range(generated.shape[1]):
             for cg in range(generated.shape[2]):
                 generated[yg, xg, cg] = np.clip(generated[yg, xg, cg] + change, 0, 255)
 
+# Increase or decrease contrast of generated face
 def ChangeGeneratedContrast(change):
     for yg in range(generated.shape[0]):
         for xg in range(generated.shape[1]):
@@ -117,7 +121,7 @@ for (x, y, w, h) in faces: # x = start x position, y = start y position, w = wid
     cv2.rectangle(scratchImg, (x, y), (x+w, y+h), (0, 255, 0), 2)
 # Display the output
 cv2.namedWindow('Image')
-cv2.setMouseCallback('Image', draw_ROI, scratchImg)
+cv2.setMouseCallback('Image', clickDetected, scratchImg)
 cv2.imshow('Image', scratchImg)
 
 while 1:
@@ -137,7 +141,7 @@ while 1:
                 # Save version of image with face pasted over
                 saveImg = originalImg.copy() # Copy original, unmodified image so rectangles will not be there
                 saveImg[selected[1]:selected[3], selected[0]:selected[2]] = generated # Put generated face there
-                scratchImg[selected[1]:selected[3], selected[0]:selected[2]] = generated #
+                scratchImg[selected[1]:selected[3], selected[0]:selected[2]] = generated
                 originalImg = saveImg.copy() # Save changes to original image as well, so future saves will not overwrite
                 cv2.imwrite(filename.replace(".jpg", "-modified.jpg").replace(".png", "-modified.png"), saveImg)
                 selected = None
