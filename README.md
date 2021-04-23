@@ -36,7 +36,7 @@ After generating a face, but before saving it, you also have the following optio
 
 # Other information
 
-This project was inspired by and uses the same neural network (stylegan2) as [https://thispersondoesnotexist.com/](thispersondoesnotexist.com).
+This project was inspired by and uses the same neural network (stylegan2) as [thispersondoesnotexist.com](https://thispersondoesnotexist.com/).
 
 We trained the model ourself with 70k input images over 150k iterations, taking over 10 days to complete.
 
