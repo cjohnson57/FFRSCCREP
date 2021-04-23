@@ -4,7 +4,9 @@ import os
 import sys
 import numpy as np
 
+# Storage for all detected faces in input image
 face_rectangles = []
+
 # selected[0]: x start, selected[1]: y start, selected[2]: x end, selected[3]: y end
 selected = None
 # Global storage for generated face
@@ -139,6 +141,10 @@ while 1:
                 originalImg = saveImg.copy() # Save changes to original image as well, so future saves will not overwrite
                 cv2.imwrite(filename.replace(".jpg", "-modified.jpg").replace(".png", "-modified.png"), saveImg)
                 selected = None
+                generated = None
+                # Make all rectangles green again
+                for rect in face_rectangles:
+                    cv2.rectangle(scratchImg, (rect[0], rect[1]), (rect[2], rect[3]), (0, 255, 0), 2)
             elif k == 66 or k == 98: # B, increase brightness
                 ChangeGeneratedBrightness(10)
             elif k == 86 or k == 118: # V, decrease brightness
