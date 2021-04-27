@@ -157,6 +157,8 @@ while 1:
                 ChangeGeneratedContrast(1.1)
             elif k == 88 or k == 120: # X, decrease contrast
                 ChangeGeneratedContrast(0.9)
+            elif k == 89 or k == 121: # Y, horizontally flip image
+                generated = cv2.flip(generated, 1)
             elif k == 82 or k == 114: # R, return generated to original form
                 generated = generatedOriginal.copy()
     if k == 27: # Escape, close program

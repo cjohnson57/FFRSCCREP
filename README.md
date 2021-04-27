@@ -32,6 +32,7 @@ After generating a face, but before saving it, you also have the following optio
 * V: Decrease brightness
 * C: Increase contrast
 * X: Decrease contrast
+* Y: Horizontally flip image
 * R: Return generated face to before any modifications made
 
 # Other information
