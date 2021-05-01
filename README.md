@@ -15,7 +15,7 @@ For example:
 
 `main.py TestImages/group.jpg`
 
-If you do not provide an argument path to an image, it will open the default image path defined on line 23 as defaultPath.
+If you do not provide an argument path to an image, it will open the default image path defined on line 8 as defaultPath.
 If you provide an argument but it is not a valid path to an image, the program will display an error then exit.
 
 After the program opens the input image, it will run facial detection and draw a green square over each detected face.
