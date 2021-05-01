@@ -25,11 +25,12 @@ face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 padding = -.05
 
 # Radius for drawing black circle around generated/over original face
-backgroundRadius = 15
+backgroundRadius = -1
 
 # User has clicked within image, check if it was within a detected face
 def clickDetected(event, clicked_x, clicked_y, flags, param):
     global selected
+    global backgroundRadius
     global generatedFull
     if event == cv2.EVENT_LBUTTONDOWN:
         for rect in face_rectangles: # Check all rectangles to see which was chosen
@@ -38,6 +39,7 @@ def clickDetected(event, clicked_x, clicked_y, flags, param):
             # Use clicked within this detected face
             if rect[0] <= clicked_x <= rect[2] and rect[1] <= clicked_y <= rect[3]:
                 selected = rect # Remember selected face
+                backgroundRadius = int((selected[2] - selected[0]) / 2.2) # Set radius as a function of the selected size
                 generatedFull = None # Set generated to none
 
 # Use our trained stylegan2 model to generate a fake face
